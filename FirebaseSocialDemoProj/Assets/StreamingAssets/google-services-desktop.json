@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "918265263992",
+    "firebase_url": "https://social-demo-firebase-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "social-demo-firebase",
+    "storage_bucket": "social-demo-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918265263992:android:516f77bd9a35a7de51ba8d",
+        "android_client_info": {
+          "package_name": "com.KekChpek.SocialDemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918265263992-6odnvligs632hl9gho33nn6o6mktr38g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCh0AbsxyoZ3UNV_d0FWvDBBF2nq68Q4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918265263992-6odnvligs632hl9gho33nn6o6mktr38g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "918265263992-gb8rcdrmg6cvtajdbh0rookg2jpme155.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.KekChpek.SocialDemo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
