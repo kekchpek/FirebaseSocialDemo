@@ -14,7 +14,7 @@ exports.addFriend = functions.https.onRequest((req, res) => {
     res.status(401).send("Unauthorized");
     return;
   }
-  if (req.headers.authorization.startsWith(authStartsWith)) {
+  if (!req.headers.authorization.startsWith(authStartsWith)) {
     res.status(400).send(
         "Authorization header wrong format. Should be \"Bearer *token*\"");
     return;
