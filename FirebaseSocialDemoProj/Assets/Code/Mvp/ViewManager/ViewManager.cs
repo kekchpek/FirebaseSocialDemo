@@ -8,7 +8,7 @@ namespace SocialDemo.Code.Mvp.ViewManager
     {
         private readonly IPresenterProvider _presenterProvider;
 
-        private IPresenter _currentPresenter = null;
+        private IPresenter _currentPresenter;
 
         public ViewManager(IPresenterProvider presenterProvider)
         {
@@ -21,7 +21,7 @@ namespace SocialDemo.Code.Mvp.ViewManager
             if (newPresenter == null)
             {
                 Debug.LogError("Presenter provider returns null! Check that presenter type is specified" +
-                               $"correct {viewDefinition.PresenterType.FullName}");
+                               $"correct: {viewDefinition.PresenterType.FullName}");
                 return;
             }
             _currentPresenter?.Dispose();
