@@ -1,14 +1,10 @@
-﻿using SocialDemo.Code.Mvp.View;
+﻿using System;
+using SocialDemo.Code.Mvp.View;
 
 namespace SocialDemo.Code.Mvp.Presenter
 { 
-    public interface IPresenter
+    public interface IPresenter : IDisposable
     {
-        
-    }
-    
-    public interface IPresenter<TView> : IPresenter where TView : IView
-    {
-
+        void Initialize();
     }
 }

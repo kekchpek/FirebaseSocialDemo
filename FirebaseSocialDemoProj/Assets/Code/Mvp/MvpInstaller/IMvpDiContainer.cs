@@ -5,17 +5,17 @@ using UnityEngine;
 
 namespace SocialDemo.Code.Mvp.MvpInstaller
 {
-    public interface IMvpInstaller
+    public interface IMvpDiContainer : IPresenterProvider
     {
-        void InstallView<TInterface, TImplementation>(GameObject prefab) 
+        void BindView<TInterface, TImplementation>(GameObject prefab) 
             where TImplementation : class, TInterface
             where TInterface : IView;
         
-        void InstallPresenter<TInterface, TImplementation>() 
+        void BindPresenter<TInterface, TImplementation>() 
             where TImplementation : class, TInterface
             where TInterface : IPresenter;
         
-        void InstallModel<TInterface, TImplementation>() 
+        void BindModel<TInterface, TImplementation>() 
             where TImplementation : class, TInterface
             where TInterface : IModel;
     }

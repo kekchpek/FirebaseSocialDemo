@@ -2,5 +2,6 @@
 {
     public interface IViewManager
     {
+        void OpenView(IViewDefinition viewDefinition);
     }
 }

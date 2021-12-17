@@ -1,44 +1,39 @@
-﻿using SocialDemo.Code.Mvp.Model;
-using SocialDemo.Code.Mvp.Presenter;
-using SocialDemo.Code.Mvp.View;
-using UnityEngine;
+﻿using SocialDemo.Code.Mvp.ViewManager;
 using Zenject;
 
 namespace SocialDemo.Code.Mvp.MvpInstaller
 {
-    public class MvpInstaller : IMvpInstaller
+    public class MvpInstaller : ScriptableObjectInstaller
     {
 
-        private readonly DiContainer _viewContainer;
-        private readonly DiContainer _presenterContainer;
-        private readonly DiContainer _modelsContainer;
+        private IMvpDiContainer _mvpDiContainer;
 
-        public MvpInstaller()
+        public override void InstallBindings()
         {
-            _presenterContainer = new DiContainer();
-            _modelsContainer = _presenterContainer.CreateSubContainer();
-            _viewContainer =_presenterContainer.CreateSubContainer();
-        }
-        
-        public void InstallView<TInterface, TImplementation>(GameObject prefab) 
-            where TImplementation : class, TInterface
-            where TInterface : IView
-        {
-            _viewContainer.Bind<TInterface>().To<TImplementation>().FromComponentInNewPrefab(prefab).AsTransient();
+            base.InstallBindings();
+            
+            _mvpDiContainer = new MvpDiContainer(Container);
+            Container.Bind<IViewManager>().To<ViewManager.ViewManager>().FromNew().AsSingle();
+            Container.Bind<IPresenterProvider>().FromInstance(_mvpDiContainer).AsSingle();
+            
+            InstallModels();
+            InstallViews();
+            InstallPresenters();
         }
 
-        public void InstallPresenter<TInterface, TImplementation>() 
-            where TImplementation : class, TInterface
-            where TInterface : IPresenter
+        private void InstallModels()
         {
-            _presenterContainer.Bind<TInterface>().To<TImplementation>().AsTransient();
+            
         }
 
-        public void InstallModel<TInterface, TImplementation>() 
-            where TInterface : IModel 
-            where TImplementation : class, TInterface
+        private void InstallViews()
         {
-            _modelsContainer.Bind<TInterface>().To<TImplementation>().AsSingle();
+            
+        }
+
+        private void InstallPresenters()
+        {
+            
         }
     }
 }
