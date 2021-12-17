@@ -1,8 +1,10 @@
 ﻿using SocialDemo.Code.Mvp.ViewManager;
+using UnityEngine;
 using Zenject;
 
 namespace SocialDemo.Code.Mvp.MvpInstaller
 {
+    [CreateAssetMenu(fileName = "MvpInstaller", menuName = "ZenjectInstallers/MvpInstaller", order = 1)]
     public class MvpInstaller : ScriptableObjectInstaller
     {
 
