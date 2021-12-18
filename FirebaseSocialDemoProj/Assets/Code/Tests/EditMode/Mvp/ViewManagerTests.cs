@@ -3,20 +3,21 @@ using NSubstitute;
 using NUnit.Framework;
 using SocialDemo.Code.Mvp.MvpInstaller;
 using SocialDemo.Code.Mvp.Presenter;
+using SocialDemo.Code.Mvp.View;
 using SocialDemo.Code.Mvp.ViewManager;
 
-namespace SocialDemo.Tests.Code.Tests.EditMode.Mvp
+namespace SocialDemo.Code.Tests.EditMode.Mvp
 {
     public class ViewManagerTests
     {
 
         private class TestPresenterClass : IPresenter
         {
-            public void Dispose()
+            public void Initialize(IPresenterPayload presenterPayload)
             {
             }
 
-            public void Initialize()
+            public void Dispose()
             {
             }
         }
@@ -29,14 +30,16 @@ namespace SocialDemo.Tests.Code.Tests.EditMode.Mvp
             return new ViewManager(presenterProvider);
         }
         
-        [Test]
-        public void OpenView_PresenterObtained()
+        [TestCase(ViewType.Screen)]
+        [TestCase(ViewType.Popup)]
+        public void OpenView_PresenterObtained(ViewType viewType)
         {
             // Arrange
             var viewManager = createViewManager(
                 out var presenterProvider);
             var viewDef = Substitute.For<IViewDefinition>();
             viewDef.PresenterType.Returns(PresenterType);
+            viewDef.ViewType.Returns(viewType);
             
             // Act
             viewManager.OpenView(viewDef);
@@ -46,7 +49,7 @@ namespace SocialDemo.Tests.Code.Tests.EditMode.Mvp
         }
         
         [Test]
-        public void OpenView_PresenterInitialized()
+        public void OpenView_NoPayload_PresenterInitialized()
         {
             // Arrange
             var viewManager = createViewManager(
@@ -60,11 +63,11 @@ namespace SocialDemo.Tests.Code.Tests.EditMode.Mvp
             viewManager.OpenView(viewDef);
 
             // Assert
-            presenter.ReceivedWithAnyArgs(1).Initialize();
+            presenter.Received(1).Initialize();
         }
         
         [Test]
-        public void OpenView_OpenedTwice_PresenterDisposed()
+        public void OpenView_HasPayload_PresenterInitialized()
         {
             // Arrange
             var viewManager = createViewManager(
@@ -73,6 +76,26 @@ namespace SocialDemo.Tests.Code.Tests.EditMode.Mvp
             presenterProvider.Obtain(PresenterType).Returns(presenter);
             var viewDef = Substitute.For<IViewDefinition>();
             viewDef.PresenterType.Returns(PresenterType);
+            var payload = Substitute.For<IPresenterPayload>();
+            
+            // Act
+            viewManager.OpenView(viewDef, payload);
+
+            // Assert
+            presenter.Received(1).Initialize(payload);
+        }
+        
+        [Test]
+        public void OpenView_TwoScreens_PresenterDisposed()
+        {
+            // Arrange
+            var viewManager = createViewManager(
+                out var presenterProvider);
+            var presenter = Substitute.For<IPresenter>();
+            presenterProvider.Obtain(PresenterType).Returns(presenter);
+            var viewDef = Substitute.For<IViewDefinition>();
+            viewDef.PresenterType.Returns(PresenterType);
+            viewDef.ViewType.Returns(ViewType.Screen);
             
             // Act
             viewManager.OpenView(viewDef);
@@ -80,6 +103,26 @@ namespace SocialDemo.Tests.Code.Tests.EditMode.Mvp
 
             // Assert
             presenter.ReceivedWithAnyArgs(1).Dispose();
+        }
+        
+        [Test]
+        public void OpenView_TwoPopups_PresenterNotDisposed()
+        {
+            // Arrange
+            var viewManager = createViewManager(
+                out var presenterProvider);
+            var presenter = Substitute.For<IPresenter>();
+            presenterProvider.Obtain(PresenterType).Returns(presenter);
+            var viewDef = Substitute.For<IViewDefinition>();
+            viewDef.PresenterType.Returns(PresenterType);
+            viewDef.ViewType.Returns(ViewType.Popup);
+            
+            // Act
+            viewManager.OpenView(viewDef);
+            viewManager.OpenView(viewDef);
+
+            // Assert
+            presenter.DidNotReceiveWithAnyArgs().Dispose();
         }
         
     }

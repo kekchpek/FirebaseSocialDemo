@@ -2,9 +2,9 @@
 using SocialDemo.Code.Mvp.View;
 
 namespace SocialDemo.Code.Mvp.Presenter
-{ 
+{
     public interface IPresenter : IDisposable
     {
-        void Initialize();
+        void Initialize(IPresenterPayload payload = null);
     }
 }

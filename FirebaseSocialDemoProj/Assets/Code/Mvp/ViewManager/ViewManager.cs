@@ -1,5 +1,6 @@
 ﻿using SocialDemo.Code.Mvp.MvpInstaller;
 using SocialDemo.Code.Mvp.Presenter;
+using SocialDemo.Code.Mvp.View;
 using UnityEngine;
 
 namespace SocialDemo.Code.Mvp.ViewManager
@@ -8,14 +9,14 @@ namespace SocialDemo.Code.Mvp.ViewManager
     {
         private readonly IPresenterProvider _presenterProvider;
 
-        private IPresenter _currentPresenter;
+        private IPresenter _currentScreenPresenter;
 
         public ViewManager(IPresenterProvider presenterProvider)
         {
             _presenterProvider = presenterProvider;
         }
         
-        public void OpenView(IViewDefinition viewDefinition)
+        public void OpenView(IViewDefinition viewDefinition, IPresenterPayload presenterPayload = null)
         {
             var newPresenter = _presenterProvider.Obtain(viewDefinition.PresenterType);
             if (newPresenter == null)
@@ -24,9 +25,14 @@ namespace SocialDemo.Code.Mvp.ViewManager
                                $"correct: {viewDefinition.PresenterType.FullName}");
                 return;
             }
-            _currentPresenter?.Dispose();
-            _currentPresenter = newPresenter;
-            _currentPresenter.Initialize();
+
+            if (viewDefinition.ViewType == ViewType.Screen)
+            {
+                _currentScreenPresenter?.Dispose();
+                _currentScreenPresenter = newPresenter;
+            }
+
+            newPresenter.Initialize(presenterPayload);
         }
     }
 }

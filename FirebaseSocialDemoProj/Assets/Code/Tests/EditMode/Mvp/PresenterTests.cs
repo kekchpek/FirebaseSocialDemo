@@ -3,12 +3,12 @@ using NUnit.Framework;
 using SocialDemo.Code.Mvp.Presenter;
 using SocialDemo.Code.Mvp.View;
 
-namespace SocialDemo.Tests.Code.Tests.EditMode.Mvp
+namespace SocialDemo.Code.Tests.EditMode.Mvp
 {
     public class PresenterTests
     {
 
-        private class TestPresenter : Presenter<IView>
+        private class TestPresenter : Presenter<IView, IPresenterPayload>
         {
             public IView TestView => View;
             
