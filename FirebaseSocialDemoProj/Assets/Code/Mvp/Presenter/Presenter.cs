@@ -42,7 +42,7 @@ namespace SocialDemo.Code.Mvp.Presenter
 
         protected abstract void Initialize();
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             View.Close();
         }
