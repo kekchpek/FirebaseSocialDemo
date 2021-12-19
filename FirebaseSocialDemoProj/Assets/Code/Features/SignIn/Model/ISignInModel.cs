@@ -2,7 +2,7 @@
 
 namespace SocialDemo.Code.Features.Models
 {
-    public interface IAuthModel
+    public interface ISignInModel
     {
         void Initialize();
         

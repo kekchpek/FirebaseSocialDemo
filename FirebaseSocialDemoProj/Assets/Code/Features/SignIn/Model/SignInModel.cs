@@ -4,7 +4,7 @@ using Google;
 
 namespace SocialDemo.Code.Features.Models {
     
-    public class AuthModel : IAuthModel
+    public class SignInModel : ISignInModel
     {
 
         private const string WebClientId = "918265263992-6odnvligs632hl9gho33nn6o6mktr38g.apps.googleusercontent.com";

@@ -8,12 +8,21 @@ namespace SocialDemo.Code.Tests.EditMode.Mvp
     public class PresenterTests
     {
 
-        private class TestPresenter : Presenter<IView, IPresenterPayload>
+        private interface ITestPresenterPayload : IPresenterPayload
+        {
+        }
+
+        private class TestPresenter : Presenter<IView, ITestPresenterPayload>
         {
             public IView TestView => View;
             
             public TestPresenter(IView view) : base(view)
             {
+            }
+
+            protected override void Initialize(ITestPresenterPayload payload)
+            {
+                throw new System.NotImplementedException();
             }
         }
 
