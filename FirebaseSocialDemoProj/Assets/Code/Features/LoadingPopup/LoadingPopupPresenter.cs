@@ -18,12 +18,10 @@ namespace SocialDemo.Code.Features.LoadingPopup
         protected override void Initialize(ILoadingPopupPayload payload)
         {
             _payload = payload;
-            if (_payload != null)
-            {
-                View.BackgroundTransparency = _payload.BackgroundTransparency;
-                View.LoadingTitle = _payload.LoadingTitle;
-                _payload.CloseTrigger.OnTriggered += Dispose;
-            }
+            if (_payload == null) return;
+            View.BackgroundTransparency = _payload.BackgroundTransparency;
+            View.LoadingTitle = _payload.LoadingTitle;
+            _payload.CloseTrigger.OnTriggered += Dispose;
         }
 
         public override void Dispose()

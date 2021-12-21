@@ -10,10 +10,9 @@ namespace SocialDemo.Code.Mvp.MvpInstaller
         void BindView<TInterface, TImplementation>(GameObject prefab) 
             where TImplementation : class, TInterface
             where TInterface : IView;
-        
-        void BindPresenter<TInterface, TImplementation>() 
-            where TImplementation : class, TInterface
-            where TInterface : IPresenter;
+
+        void BindPresenter<TImplementation>()
+            where TImplementation : class;
         
         void BindModel<TInterface, TImplementation>() 
             where TImplementation : class, TInterface

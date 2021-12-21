@@ -1,4 +1,6 @@
-﻿using SocialDemo.Code.Mvp.ViewManager;
+﻿using SocialDemo.Code.Features.LoadingPopup;
+using SocialDemo.Code.Features.LoadingPopup.View;
+using SocialDemo.Code.Mvp.ViewManager;
 using UnityEngine;
 using Zenject;
 
@@ -18,22 +20,22 @@ namespace SocialDemo.Code.Mvp.MvpInstaller
             Container.Bind<IViewManager>().To<ViewManager.ViewManager>().FromNew().AsSingle();
             Container.Bind<IPresenterProvider>().FromInstance(_mvpDiContainer).AsSingle();
             
-            InstallModels();
-            InstallViews();
-            InstallPresenters();
+            BindModels();
+            BindPresenters();
+            BindViews();
         }
 
-        private void InstallModels()
+        private void BindPresenters()
         {
-            
+            _mvpDiContainer.BindPresenter<LoadingPopupPresenter>();
         }
 
-        private void InstallViews()
+        private void BindViews()
         {
-            
+            _mvpDiContainer.BindView<ILoadingPopupView, LoadingPopupView>(Resources.Load<GameObject>("Views/LoadingPopupView"));
         }
 
-        private void InstallPresenters()
+        private void BindModels()
         {
             
         }

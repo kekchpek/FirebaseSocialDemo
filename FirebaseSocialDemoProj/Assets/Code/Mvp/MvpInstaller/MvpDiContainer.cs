@@ -28,11 +28,10 @@ namespace SocialDemo.Code.Mvp.MvpInstaller
             _viewContainer.Bind<TInterface>().To<TImplementation>().FromComponentInNewPrefab(prefab).AsTransient();
         }
 
-        public void BindPresenter<TInterface, TImplementation>() 
-            where TImplementation : class, TInterface
-            where TInterface : IPresenter
+        public void BindPresenter<TImplementation>() 
+            where TImplementation : class
         {
-            _presenterContainer.Bind<TInterface>().To<TImplementation>().AsTransient();
+            _presenterContainer.Bind<TImplementation>().AsTransient();
         }
 
         public void BindModel<TInterface, TImplementation>() 
