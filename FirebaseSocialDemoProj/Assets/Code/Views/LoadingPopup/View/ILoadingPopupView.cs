@@ -1,6 +1,6 @@
 ﻿using SocialDemo.Code.Mvp.View;
 
-namespace SocialDemo.Code.Features.LoadingPopup.View
+namespace SocialDemo.Code.Views.LoadingPopup.View
 {
     public interface ILoadingPopupView : IView
     {

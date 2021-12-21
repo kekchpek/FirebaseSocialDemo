@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SocialDemo.Code.Features.LoadingPopup.View
+namespace SocialDemo.Code.Views.LoadingPopup.View
 {
     public class LoadingPopupView : Mvp.View.View, ILoadingPopupView
     {

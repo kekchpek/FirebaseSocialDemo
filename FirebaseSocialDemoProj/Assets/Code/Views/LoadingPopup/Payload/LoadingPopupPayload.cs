@@ -1,6 +1,6 @@
 ﻿using SocialDemo.Code.Auxiliary.Trigger;
 
-namespace SocialDemo.Code.Features.LoadingPopup.Payload
+namespace SocialDemo.Code.Views.LoadingPopup.Payload
 {
     public class LoadingPopupPayload : ILoadingPopupPayload
     {

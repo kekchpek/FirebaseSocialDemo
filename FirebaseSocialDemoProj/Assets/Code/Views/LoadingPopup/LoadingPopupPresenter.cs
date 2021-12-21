@@ -1,9 +1,8 @@
-﻿using SocialDemo.Code.Features.LoadingPopup.Payload;
-using SocialDemo.Code.Features.LoadingPopup.View;
-using SocialDemo.Code.Mvp.Presenter;
-using SocialDemo.Code.Mvp.View;
+﻿using SocialDemo.Code.Mvp.Presenter;
+using SocialDemo.Code.Views.LoadingPopup.Payload;
+using SocialDemo.Code.Views.LoadingPopup.View;
 
-namespace SocialDemo.Code.Features.LoadingPopup
+namespace SocialDemo.Code.Views.LoadingPopup
 {
     public class LoadingPopupPresenter : Presenter<ILoadingPopupView, ILoadingPopupPayload>
     {

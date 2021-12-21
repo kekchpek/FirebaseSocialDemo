@@ -1,7 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using SocialDemo.Code.Auxiliary.Trigger;
-using SocialDemo.Code.Features.LoadingPopup.Payload;
+using SocialDemo.Code.Views.LoadingPopup.Payload;
 
 namespace SocialDemo.Code.Tests.EditMode.Features.LoadingPopup
 {

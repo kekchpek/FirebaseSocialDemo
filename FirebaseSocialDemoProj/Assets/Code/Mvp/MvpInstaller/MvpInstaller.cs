@@ -1,6 +1,6 @@
-﻿using SocialDemo.Code.Features.LoadingPopup;
-using SocialDemo.Code.Features.LoadingPopup.View;
-using SocialDemo.Code.Mvp.ViewManager;
+﻿using SocialDemo.Code.Mvp.ViewManager;
+using SocialDemo.Code.Views.LoadingPopup;
+using SocialDemo.Code.Views.LoadingPopup.View;
 using UnityEngine;
 using Zenject;
 

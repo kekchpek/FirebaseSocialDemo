@@ -1,9 +1,9 @@
 ﻿using System;
 using NSubstitute;
 using NUnit.Framework;
-using SocialDemo.Code.Features.LoadingPopup;
-using SocialDemo.Code.Features.LoadingPopup.Payload;
-using SocialDemo.Code.Features.LoadingPopup.View;
+using SocialDemo.Code.Views.LoadingPopup;
+using SocialDemo.Code.Views.LoadingPopup.Payload;
+using SocialDemo.Code.Views.LoadingPopup.View;
 
 namespace SocialDemo.Code.Tests.EditMode.Features.LoadingPopup
 {
