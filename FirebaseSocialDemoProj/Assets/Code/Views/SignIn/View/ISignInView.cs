@@ -7,5 +7,6 @@ namespace SocialDemo.Code.Views.SignIn.View
         string Login { get; }
         string Password { get; }
         event Action LoginClicked;
+        event Action LoginGoogleClicked;
     }
 }
