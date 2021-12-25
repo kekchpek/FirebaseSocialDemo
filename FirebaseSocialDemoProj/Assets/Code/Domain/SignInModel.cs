@@ -29,7 +29,7 @@ namespace SocialDemo.Code.Domain
 
         public IPromise<string> SignIn(string login, string password)
         {
-            throw new NotImplementedException();
+            return _promiseFactory.CreateFailedPromise<string>(new NotImplementedException("Sign in with login and password is not implemented"));
         }
 
         public IPromise<string> SignInWithGoogle()
