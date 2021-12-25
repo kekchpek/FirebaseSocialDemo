@@ -5,7 +5,7 @@ using SocialDemo.Code.Views.LoadingPopup;
 using SocialDemo.Code.Views.LoadingPopup.Payload;
 using SocialDemo.Code.Views.LoadingPopup.View;
 
-namespace SocialDemo.Code.Tests.EditMode.Features.LoadingPopup
+namespace SocialDemo.Code.Tests.EditMode.Views.LoadingPopup
 {
     public class LoadingPopupPresenterTests
     {

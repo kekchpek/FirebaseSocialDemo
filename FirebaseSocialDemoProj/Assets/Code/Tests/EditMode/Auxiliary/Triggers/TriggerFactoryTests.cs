@@ -2,7 +2,7 @@
 using SocialDemo.Code.Auxiliary.Trigger;
 using SocialDemo.Code.Auxiliary.Trigger.Factory;
 
-namespace SocialDemo.Code.Tests.EditMode.Auxiliary
+namespace SocialDemo.Code.Tests.EditMode.Auxiliary.Triggers
 {
     public class TriggerFactoryTests
     {

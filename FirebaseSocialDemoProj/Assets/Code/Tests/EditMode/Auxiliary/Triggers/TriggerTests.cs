@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using SocialDemo.Code.Auxiliary.Trigger;
 
-namespace SocialDemo.Code.Tests.EditMode.Auxiliary
+namespace SocialDemo.Code.Tests.EditMode.Auxiliary.Triggers
 {
     public class TriggerTests
     {
