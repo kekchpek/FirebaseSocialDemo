@@ -21,27 +21,34 @@ namespace SocialDemo.Code.Auxiliary.Promises
         
         public IBasePromise OnFail(Action<Exception> callback)
         {
-            if (_failingError != null)
+            lock (this)
             {
-                callback?.Invoke(_failingError);
-            }
-            else
-            {
-                _failCallbacks.Add(callback);
+                if (_failingError != null)
+                {
+                    callback?.Invoke(_failingError);
+                }
+                else
+                {
+                    _failCallbacks.Add(callback);
+                }
             }
 
             return this;
+            
         }
 
         public IBasePromise Finally(Action callback)
         {
-            if (IsCompleted)
+            lock (this)
             {
-                callback?.Invoke();
-            }
-            else
-            {
-                _finallyCallbacks.Add(callback);
+                if (IsCompleted)
+                {
+                    callback?.Invoke();
+                }
+                else
+                {
+                    _finallyCallbacks.Add(callback);
+                }
             }
 
             return this;
@@ -49,14 +56,18 @@ namespace SocialDemo.Code.Auxiliary.Promises
 
         public void Fail(Exception error)
         {
-            if (IsCompleted)
-                throw new InvalidOperationException("Promise is already completed!");
-            _failingError = error ?? new Exception("The null was passed to the promise as an exception");
-            foreach (var callback in _failCallbacks)
+            lock (this)
             {
-                _unityExecutor.ExecuteOnFixedUpdate(() => callback?.Invoke(_failingError));
+                if (IsCompleted)
+                    throw new InvalidOperationException("Promise is already completed!");
+                _failingError = error ?? new Exception("The null was passed to the promise as an exception");
+                foreach (var callback in _failCallbacks)
+                {
+                    _unityExecutor.ExecuteOnFixedUpdate(() => callback?.Invoke(_failingError));
+                }
+
+                DoFinally();
             }
-            DoFinally();
         }
 
         /// <summary>

@@ -17,24 +17,31 @@ namespace SocialDemo.Code.Auxiliary.Promises
 
         public void Success()
         {
-            if (IsCompleted)
-                throw new InvalidOperationException("Promise is already completed!");
-            foreach (var callback in _successCallbacks)
+            lock (this)
             {
-                _unityExecutor.ExecuteOnFixedUpdate(() => callback?.Invoke());
+                if (IsCompleted)
+                    throw new InvalidOperationException("Promise is already completed!");
+                foreach (var callback in _successCallbacks)
+                {
+                    _unityExecutor.ExecuteOnFixedUpdate(() => callback?.Invoke());
+                }
+
+                DoFinally();
             }
-            DoFinally();
         }
 
         public IPromise OnSuccess(Action callback)
         {
-            if (IsCompleted)
+            lock (this)
             {
-                callback?.Invoke();
-            }
-            else
-            {
-                _successCallbacks.Add(callback);
+                if (IsCompleted)
+                {
+                    callback?.Invoke();
+                }
+                else
+                {
+                    _successCallbacks.Add(callback);
+                }
             }
 
             return this;
@@ -57,26 +64,33 @@ namespace SocialDemo.Code.Auxiliary.Promises
 
         public void Success(T result)
         {
-            if (IsCompleted)
-                throw new InvalidOperationException("Promise is already completed!");
-            _result = result;
-            _resultSet = true;
-            foreach (var callback in _successCallbacks)
+            lock (this)
             {
-                _unityExecutor.ExecuteOnFixedUpdate(() => callback?.Invoke(_result));
+                if (IsCompleted)
+                    throw new InvalidOperationException("Promise is already completed!");
+                _result = result;
+                _resultSet = true;
+                foreach (var callback in _successCallbacks)
+                {
+                    _unityExecutor.ExecuteOnFixedUpdate(() => callback?.Invoke(_result));
+                }
+
+                DoFinally();
             }
-            DoFinally();
         }
 
         public IPromise<T> OnSuccess(Action<T> callback)
         {
-            if (_resultSet)
+            lock (this)
             {
-                callback?.Invoke(_result);
-            }
-            else
-            {
-                _successCallbacks.Add(callback);
+                if (_resultSet)
+                {
+                    callback?.Invoke(_result);
+                }
+                else
+                {
+                    _successCallbacks.Add(callback);
+                }
             }
 
             return this;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using SocialDemo.Code.Auxiliary.UnityExecutor;
+using UnityEngine;
 
 namespace SocialDemo.Code.Auxiliary.Promises.Factory
 {
@@ -56,11 +57,13 @@ namespace SocialDemo.Code.Auxiliary.Promises.Factory
             var promise = new ControllablePromise(_unityExecutor);
             task.ContinueWith(t =>
             {
+                if (t.IsCanceled)
+                    Debug.LogWarning("Promises doesn't support task canceling");
                 if (t.Exception == null)
                     promise.Success();
                 else
                     promise.Fail(t.Exception.InnerException);
-            }, TaskContinuationOptions.ExecuteSynchronously);
+            }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.PreferFairness);
             return promise;
         }
 
@@ -69,11 +72,13 @@ namespace SocialDemo.Code.Auxiliary.Promises.Factory
             var promise = new ControllablePromise<T>(_unityExecutor);
             task.ContinueWith(t =>
             {
+                if (t.IsCanceled)
+                    Debug.LogWarning("Promises doesn't support task canceling");
                 if (t.Exception == null)
                     promise.Success(t.Result);
                 else
                     promise.Fail(t.Exception.InnerException);
-            }, TaskContinuationOptions.ExecuteSynchronously);
+            }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.PreferFairness);
             return promise;
         }
     }
