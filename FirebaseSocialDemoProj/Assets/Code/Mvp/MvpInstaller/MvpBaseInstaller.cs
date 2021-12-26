@@ -7,7 +7,7 @@ using Zenject;
 namespace SocialDemo.Code.Mvp.MvpInstaller
 {
     [CreateAssetMenu(fileName = "MvpInstaller", menuName = "ZenjectInstallers/MvpInstaller", order = 1)]
-    public class MvpInstaller : ScriptableObjectInstaller
+    public abstract class MvpBaseInstaller : ScriptableObjectInstaller
     {
 
         private IMvpDiContainer _mvpDiContainer;
@@ -19,25 +19,15 @@ namespace SocialDemo.Code.Mvp.MvpInstaller
             _mvpDiContainer = new MvpDiContainer(Container);
             Container.Bind<IViewManager>().To<ViewManager.ViewManager>().FromNew().AsSingle();
             Container.Bind<IPresenterProvider>().FromInstance(_mvpDiContainer).AsSingle();
-            
-            BindModels();
-            BindPresenters();
-            BindViews();
+            BindModels(_mvpDiContainer);
+            BindPresenters(_mvpDiContainer);
+            BindViews(_mvpDiContainer);
         }
 
-        private void BindPresenters()
-        {
-            _mvpDiContainer.BindPresenter<LoadingPopupPresenter>();
-        }
+        protected abstract void BindPresenters(IMvpDiContainer mvpDiContainer);
 
-        private void BindViews()
-        {
-            _mvpDiContainer.BindView<ILoadingPopupView, LoadingPopupView>(Resources.Load<GameObject>("Views/LoadingPopupView"));
-        }
+        protected abstract void BindViews(IMvpDiContainer mvpDiContainer);
 
-        private void BindModels()
-        {
-            
-        }
+        protected abstract void BindModels(IMvpDiContainer mvpDiContainer);
     }
 }
