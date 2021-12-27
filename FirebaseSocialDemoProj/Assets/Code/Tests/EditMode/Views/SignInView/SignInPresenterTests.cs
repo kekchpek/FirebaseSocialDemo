@@ -70,7 +70,7 @@ namespace SocialDemo.Code.Tests.EditMode.Views.SignInView
         }
 
         [Test]
-        public void Login_PromiseFailed_ErrorShown()
+        public void Login_ButtonClicked_AuthModelSignedIn()
         {
             // Arrange
             var presenter = CreatePresenter(out var signInVew,
@@ -88,7 +88,7 @@ namespace SocialDemo.Code.Tests.EditMode.Views.SignInView
         }
 
         [Test]
-        public void Login_ButtonClicked_AuthModelSignedIn()
+        public void Login_PromiseFailed_ErrorShown()
         {
             // Arrange
             var presenter = CreatePresenter(out var signInVew,
@@ -104,7 +104,7 @@ namespace SocialDemo.Code.Tests.EditMode.Views.SignInView
             
             // Act
             presenter.Initialize(null);
-            signInVew.LoginGoogleClicked += Raise.Event<Action>();
+            signInVew.LoginClicked += Raise.Event<Action>();
             if (errorCallbacksRef.TryGetTarget(out var errorCallbacks))
             {
                 foreach (var callback in errorCallbacks)
