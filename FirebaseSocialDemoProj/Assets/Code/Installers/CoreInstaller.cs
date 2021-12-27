@@ -11,9 +11,9 @@ namespace SocialDemo.Code.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<IPromiseFactory>().To<PromiseFactory>().AsSingle();
-            Container.Bind<ITriggerFactory>().To<TriggerFactory>().AsSingle();
-            Container.Bind<IUnityExecutor>().To<UnityExecutor>().AsSingle();
+            Container.Bind<IPromiseFactory>().To<PromiseFactory>().FromNew().AsSingle();
+            Container.Bind<ITriggerFactory>().To<TriggerFactory>().FromNew().AsSingle();
+            Container.Bind<IUnityExecutor>().To<UnityExecutor>().FromNewComponentOnNewGameObject().AsSingle();
         }
     }
 }

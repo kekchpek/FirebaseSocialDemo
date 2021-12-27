@@ -41,6 +41,17 @@ namespace SocialDemo.Code.Auxiliary.Extensions
             return errorStringBuilder.ToString();
         }
 
+        public static string GetErrorMessage(this Exception exception)
+        {
+            var processingException = exception;
+            while (processingException is AggregateException)
+            {
+                processingException = processingException.InnerException;
+            }
+
+            return processingException != null ? processingException.Message : "Invalid error";
+        }
+
         private static string GetNotAggregateErrorString(Exception exception)
         {
             var errorStringBuilder = new StringBuilder();

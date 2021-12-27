@@ -12,7 +12,7 @@ namespace SocialDemo.Code.Mvp.View
         public void Close()
         {
             OnClose();
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

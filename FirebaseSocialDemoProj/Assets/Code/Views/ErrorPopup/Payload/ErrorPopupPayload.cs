@@ -5,7 +5,7 @@
         public string Message { get; }
         public float BackgroundTransparency { get; }
 
-        public ErrorPopupPayload(string message, float backgroundTransparency)
+        public ErrorPopupPayload(string message, float backgroundTransparency = 0.2f)
         {
             Message = message;
             BackgroundTransparency = backgroundTransparency;
