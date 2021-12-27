@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 569523733679003806}
   - component: {fileID: 116058664607421143}
   m_Layer: 0
-  m_Name: Button
+  m_Name: GoogleLoginButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -714,6 +714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7300044147675181662}
   - component: {fileID: 5604292990284266382}
+  - component: {fileID: 5900833023154873487}
   m_Layer: 0
   m_Name: SignInView
   m_TagString: Untagged
@@ -750,6 +751,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6181479570613794553}
   m_CullTransparentMesh: 1
+--- !u!114 &5900833023154873487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181479570613794553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b06bf41e4384fcaaf51978c16c2e81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loginButton: {fileID: 5232611936526340870}
+  _loginGoogleButton: {fileID: 116058664607421143}
+  _loginInputField: {fileID: 5646089664327749655}
+  _passwordInputField: {fileID: 7217052641464044204}
 --- !u!1 &6264220320967887259
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,7 +1141,7 @@ GameObject:
   - component: {fileID: 1530650832619614582}
   - component: {fileID: 5232611936526340870}
   m_Layer: 0
-  m_Name: Button
+  m_Name: LoginButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

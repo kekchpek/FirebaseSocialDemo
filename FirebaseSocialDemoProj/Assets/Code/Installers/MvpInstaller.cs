@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace SocialDemo.Code.Installers
 {
+    [CreateAssetMenu(fileName = "MvpInstaller", menuName = "ZenjectInstallers/MvpInstaller", order = 1)]
     public class MvpInstaller : MvpBaseInstaller
     {
         protected override void BindPresenters(IMvpDiContainer mvpDiContainer)

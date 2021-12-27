@@ -11,7 +11,6 @@ namespace SocialDemo.Code.Views.SignIn
 
         protected override void Initialize()
         {
-            throw new System.NotImplementedException();
         }
     }
 }
