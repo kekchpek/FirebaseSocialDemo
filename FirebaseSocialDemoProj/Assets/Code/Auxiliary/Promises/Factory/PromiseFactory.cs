@@ -81,5 +81,13 @@ namespace SocialDemo.Code.Auxiliary.Promises.Factory
             }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.PreferFairness);
             return promise;
         }
+
+        public IPromise CreateFromPromise<T>(IPromise<T> promiseWithResult)
+        {
+            var promise = new ControllablePromise(_unityExecutor);
+            promiseWithResult.OnSuccess(x => promise.Success());
+            promiseWithResult.OnFail(e => promise.Fail(e));
+            return promise;
+        }
     }
 }

@@ -45,6 +45,11 @@ namespace SocialDemo.Code.Domain
             }));
         }
 
+        public IPromise CreateNewUser(string login, string password)
+        {
+            return  _promiseFactory.CreateFromPromise(WrapSignInTask(_authApi.CreateUserWithEmailAndPasswordAsync(login, password)));
+        }
+
         public IPromise SignOut()
         {
             _authApi.SignOut();

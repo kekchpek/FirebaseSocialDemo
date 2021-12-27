@@ -16,5 +16,7 @@ namespace SocialDemo.Code.Auxiliary.Promises.Factory
 
         IPromise CreateFromTask(Task task);
         IPromise<T> CreateFromTask<T>(Task<T> task);
+
+        IPromise CreateFromPromise<T>(IPromise<T> promiseWithResult);
     }
 }

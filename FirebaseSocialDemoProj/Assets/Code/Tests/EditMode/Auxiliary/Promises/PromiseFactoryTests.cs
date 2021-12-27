@@ -9,6 +9,7 @@ using NUnit.Framework;
 using SocialDemo.Code.Auxiliary.Promises;
 using SocialDemo.Code.Auxiliary.Promises.Factory;
 using SocialDemo.Code.Auxiliary.UnityExecutor;
+using SocialDemo.Code.Tests.EditMode.TestUtils;
 
 namespace SocialDemo.Code.Tests.EditMode.Auxiliary.Promises
 {
@@ -370,6 +371,74 @@ namespace SocialDemo.Code.Tests.EditMode.Auxiliary.Promises
             
             // Assert
             Assert.AreEqual(testException, failException);
+        }
+
+        [Test]
+        public void CreateFromPromise_ControllablePromiseCreated()
+        {
+            // Arrange
+            var factory = CreateFactory(out var unityExecutor);
+            
+            // Act
+            var promise = factory.CreateFromPromise(Substitute.For<IPromise<object>>());
+            
+            // Assert
+            Assert.IsTrue(promise is ControllablePromise);
+        }
+
+        [Test]
+        public void CreateFromPromise_Success_Proxied()
+        {
+            // Arrange
+            var factory = CreateFactory(out var unityExecutor);
+
+            var sourcePromise = TestPromisesStaticFactory.CreatePromise<object>(out var successCallbacksRef,
+                out var errorCallbacksRef,
+                out var finallyCallbacksRef);
+            var successCalled = false;
+            unityExecutor.ExecuteOnFixedUpdate(Arg.Do<Action>(x => x?.Invoke()));
+            
+            // Act
+            var promise = factory.CreateFromPromise(sourcePromise);
+            promise.OnSuccess(() => successCalled = true);
+            if (successCallbacksRef.TryGetTarget(out var successCallbacks))
+            {
+                foreach (var callback in successCallbacks)
+                {
+                    callback?.Invoke(new object());
+                }
+            }
+            
+            // Assert
+            Assert.IsTrue(successCalled);
+        }
+
+        [Test]
+        public void CreateFromPromise_Fail_Proxied()
+        {
+            // Arrange
+            var factory = CreateFactory(out var unityExecutor);
+
+            var sourcePromise = TestPromisesStaticFactory.CreatePromise<object>(out var successCallbacksRef,
+                out var errorCallbacksRef,
+                out var finallyCallbacksRef);
+            Exception receivedException = null;
+            var testException = new Exception("Test exception");
+            unityExecutor.ExecuteOnFixedUpdate(Arg.Do<Action>(x => x?.Invoke()));
+            
+            // Act
+            var promise = factory.CreateFromPromise(sourcePromise);
+            promise.OnFail(x => receivedException = x);
+            if (errorCallbacksRef.TryGetTarget(out var errorCallbacks))
+            {
+                foreach (var callback in errorCallbacks)
+                {
+                    callback?.Invoke(testException);
+                }
+            }
+            
+            // Assert
+            Assert.AreEqual(testException, receivedException);
         }
     }
 }

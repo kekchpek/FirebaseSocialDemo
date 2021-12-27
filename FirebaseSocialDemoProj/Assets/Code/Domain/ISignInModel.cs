@@ -6,7 +6,9 @@ namespace SocialDemo.Code.Domain
     public interface ISignInModel : IModel
     {
         IPromise<string> GetUserToken();
+        
         bool IsSignedIn { get; }
+        
         /// <summary>
         /// Sign in with user login and password
         /// </summary>
@@ -20,6 +22,9 @@ namespace SocialDemo.Code.Domain
         /// </summary>
         /// <returns>Returns user's token</returns>
         IPromise<string> SignInWithGoogle();
+
+        IPromise CreateNewUser(string login, string password);
+        
         IPromise SignOut();
     }
 }
