@@ -23,11 +23,18 @@ namespace SocialDemo.Code.Views.SignIn
         protected override void Initialize()
         {
             View.LoginGoogleClicked += OnGoogleSingInClicked;
+            View.LoginClicked += OnSignInClicked;
         }
 
         private void OnGoogleSingInClicked()
         {
             _signInModel.SignInWithGoogle()
+                .OnFail(e => _viewManager.OpenView(ViewDefinitions.ErrorPopup, new ErrorPopupPayload(e.GetErrorMessage())));
+        }
+
+        private void OnSignInClicked()
+        {
+            _signInModel.SignIn(View.Login, View.Password)
                 .OnFail(e => _viewManager.OpenView(ViewDefinitions.ErrorPopup, new ErrorPopupPayload(e.GetErrorMessage())));
         }
     }

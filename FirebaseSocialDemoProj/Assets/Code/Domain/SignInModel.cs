@@ -29,7 +29,7 @@ namespace SocialDemo.Code.Domain
 
         public IPromise<string> SignIn(string login, string password)
         {
-            return _promiseFactory.CreateFailedPromise<string>(new NotImplementedException("Sign in with login and password is not implemented"));
+            return WrapSignInTask(_authApi.SignInWithEmailAndPasswordAsync(login, password));
         }
 
         public IPromise<string> SignInWithGoogle()
@@ -38,7 +38,21 @@ namespace SocialDemo.Code.Domain
             data.ProviderId = GoogleAuthProvider.ProviderId;
             var provider = new FederatedOAuthProvider(data);
             provider.SetProviderData(data);
+            return WrapSignInTask(_authApi.SignInWithProviderAsync(provider).ContinueWith(t =>
+            {
+                t.Wait();
+                return t.Result.User;
+            }));
+        }
 
+        public IPromise SignOut()
+        {
+            _authApi.SignOut();
+            return _promiseFactory.CreateSucceedPromise();
+        }
+
+        private IPromise<string> WrapSignInTask(Task<FirebaseUser> task)
+        {
             var tokenSemaphore = new SemaphoreSlim(0, 1);
             Exception getTokenException = null;
             string userToken = null;
@@ -50,7 +64,7 @@ namespace SocialDemo.Code.Domain
                 return userToken;
             });
 
-            var signInTask = _authApi.SignInWithProviderAsync(provider);
+            var signInTask = task;
             signInTask.ContinueWith(t =>
             {
                 if (t.Exception != null)
@@ -59,7 +73,7 @@ namespace SocialDemo.Code.Domain
                     tokenSemaphore.Release();
                     return;
                 }
-                t.Result.User.TokenAsync(false)
+                t.Result.TokenAsync(false)
                     .ContinueWith(tokenTask =>
                     {
                         if (tokenTask.Exception != null)
@@ -75,12 +89,6 @@ namespace SocialDemo.Code.Domain
             }, TaskContinuationOptions.ExecuteSynchronously);
             
             return _promiseFactory.CreateFromTask(getTokenTask);
-        }
-
-        public IPromise SignOut()
-        {
-            _authApi.SignOut();
-            return _promiseFactory.CreateSucceedPromise();
         }
     }
 }
