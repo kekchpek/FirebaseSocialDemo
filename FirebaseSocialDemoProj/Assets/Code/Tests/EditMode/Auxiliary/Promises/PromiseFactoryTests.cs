@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using SocialDemo.Code.Auxiliary.Promises;
 using SocialDemo.Code.Auxiliary.Promises.Factory;
 using SocialDemo.Code.Auxiliary.UnityExecutor;
 using SocialDemo.Code.Tests.EditMode.TestUtils;
+using Debug = UnityEngine.Debug;
 
 namespace SocialDemo.Code.Tests.EditMode.Auxiliary.Promises
 {
@@ -321,25 +323,28 @@ namespace SocialDemo.Code.Tests.EditMode.Auxiliary.Promises
             // Arrange
             var factory = CreateFactory(out var unityExecutor);
             var testException = new Exception("Test exception");
+
             void TaskAction()
             {
                 throw testException;
             }
 
             Exception failException = null;
+
             void FailCallback(Exception exception)
             {
                 failException = exception;
             }
-            
+
             unityExecutor.ExecuteOnFixedUpdate(Arg.Do<Action>(x => x?.Invoke()));
 
             // Act
-            var task = Task.Run(TaskAction);
+            var task = Task.Factory.StartNew(TaskAction);
             var promise = factory.CreateFromTask(task);
-            Task.WaitAny(task.ContinueWith(t => { }, TaskContinuationOptions.PreferFairness));
             promise.OnFail(FailCallback);
-            
+            Task.WaitAny(task);
+            AwaitAllThreadsFromPoolReleased();
+
             // Assert
             Assert.AreEqual(testException, failException);
         }
@@ -350,25 +355,28 @@ namespace SocialDemo.Code.Tests.EditMode.Auxiliary.Promises
             // Arrange
             var factory = CreateFactory(out var unityExecutor);
             var testException = new Exception("Test exception");
+
             object TaskAction()
             {
                 throw testException;
             }
 
             Exception failException = null;
+
             void FailCallback(Exception exception)
             {
                 failException = exception;
             }
-            
+
             unityExecutor.ExecuteOnFixedUpdate(Arg.Do<Action>(x => x?.Invoke()));
 
             // Act
             var task = Task.Run(TaskAction);
             var promise = factory.CreateFromTask(task);
-            Task.WaitAny(task.ContinueWith(t => { }, TaskContinuationOptions.PreferFairness));
             promise.OnFail(FailCallback);
-            
+            Task.WaitAny(task);
+            AwaitAllThreadsFromPoolReleased();
+
             // Assert
             Assert.AreEqual(testException, failException);
         }
@@ -439,6 +447,18 @@ namespace SocialDemo.Code.Tests.EditMode.Auxiliary.Promises
             
             // Assert
             Assert.AreEqual(testException, receivedException);
+        }
+
+        private static void AwaitAllThreadsFromPoolReleased()
+        {
+            while (true)
+            {
+                Thread.Yield();
+                ThreadPool.GetAvailableThreads(out var workerThreads, out var completionPortThreads);
+                ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxCompletionPortThreads);
+                if (workerThreads == maxWorkerThreads)
+                    break;
+            }
         }
     }
 }

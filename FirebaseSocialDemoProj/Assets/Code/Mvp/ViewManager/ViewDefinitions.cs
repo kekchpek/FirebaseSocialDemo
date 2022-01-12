@@ -1,7 +1,7 @@
 ﻿using SocialDemo.Code.Mvp.View;
 using SocialDemo.Code.Views.ErrorPopup;
-using SocialDemo.Code.Views.ErrorPopup.View;
 using SocialDemo.Code.Views.LoadingPopup;
+using SocialDemo.Code.Views.RegisterScreen;
 using SocialDemo.Code.Views.SignIn;
 
 namespace SocialDemo.Code.Mvp.ViewManager
@@ -14,5 +14,7 @@ namespace SocialDemo.Code.Mvp.ViewManager
             new ViewDefinition(typeof(ErrorPopupPresenter), ViewType.Popup);
         public static readonly ViewDefinition SignIn =
             new ViewDefinition(typeof(SignInPresenter), ViewType.Screen);
+        public static readonly ViewDefinition RegisterScreen =
+            new ViewDefinition(typeof(RegisterScreenPresenter), ViewType.Screen);
     }
 }

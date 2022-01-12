@@ -62,7 +62,10 @@ namespace SocialDemo.Code.Auxiliary.Promises.Factory
                 if (t.Exception == null)
                     promise.Success();
                 else
+                {
+                    Debug.Log(t.Exception.InnerException);
                     promise.Fail(t.Exception.InnerException);
+                }
             }, TaskContinuationOptions.ExecuteSynchronously | TaskContinuationOptions.PreferFairness);
             return promise;
         }

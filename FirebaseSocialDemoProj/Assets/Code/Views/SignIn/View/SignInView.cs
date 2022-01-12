@@ -9,6 +9,7 @@ namespace SocialDemo.Code.Views.SignIn.View
     {
         [SerializeField] private Button _loginButton;
         [SerializeField] private Button _loginGoogleButton;
+        [SerializeField] private Button _registerButton;
         [SerializeField] private TMP_InputField _loginInputField;
         [SerializeField] private TMP_InputField _passwordInputField;
 
@@ -16,11 +17,13 @@ namespace SocialDemo.Code.Views.SignIn.View
         {
             _loginButton.onClick.AddListener(()=> LoginClicked?.Invoke());
             _loginGoogleButton.onClick.AddListener(()=> LoginGoogleClicked?.Invoke());
+            _registerButton.onClick.AddListener(()=> RegisterClicked?.Invoke());
         }
 
         public string Login => _loginInputField.text;
         public string Password => _passwordInputField.text;
         public event Action LoginClicked;
         public event Action LoginGoogleClicked;
+        public event Action RegisterClicked;
     }
 }
