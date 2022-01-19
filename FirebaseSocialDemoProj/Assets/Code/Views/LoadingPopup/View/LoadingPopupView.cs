@@ -20,7 +20,7 @@ namespace SocialDemo.Code.Views.LoadingPopup.View
             get => 1f - _backgroundImage.color.a;
             set =>
                 _backgroundImage.color = 
-                    new Color(1f, 1f, 1f, 1f - value);
+                    new Color(0f, 0f, 0f, 1f - value);
         }
     }
 }
